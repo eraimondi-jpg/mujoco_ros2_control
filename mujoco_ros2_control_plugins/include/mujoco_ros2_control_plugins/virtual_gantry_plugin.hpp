@@ -47,6 +47,7 @@ class VirtualGantryPlugin : public MuJoCoROS2ControlPluginBase
 public:
   bool init(rclcpp::Node::SharedPtr node, const mjModel* model, mjData* data) override;
   void update(const mjModel* model, mjData* data) override;
+  void pre_step(const mjModel* model, mjData* data) override;
   void reset() override;
   void cleanup() override;
   bool on_key(int key, int scancode, int action, int mods) override;

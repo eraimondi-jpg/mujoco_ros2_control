@@ -94,7 +94,7 @@ bool VirtualGantryPlugin::init(rclcpp::Node::SharedPtr node, const mjModel* mode
   return true;
 }
 
-void VirtualGantryPlugin::update(const mjModel* /*model*/, mjData* data)
+void VirtualGantryPlugin::update(const mjModel* /*model*/, mjData* /*data*/)
 {
   std::lock_guard<std::mutex> lock(state_mutex_);
 
@@ -129,6 +129,11 @@ void VirtualGantryPlugin::update(const mjModel* /*model*/, mjData* data)
       RCLCPP_WARN(node_->get_logger(), "VirtualGantryPlugin: gantry disabled — rope length unchanged");
     }
   }
+}
+
+void VirtualGantryPlugin::pre_step(const mjModel* /*model*/, mjData* data)
+{
+  std::lock_guard<std::mutex> lock(state_mutex_);
 
   // --- Compute attachment point in world frame ------------------------------
   // attach_pos = body CoM + rotation_matrix * body_offset

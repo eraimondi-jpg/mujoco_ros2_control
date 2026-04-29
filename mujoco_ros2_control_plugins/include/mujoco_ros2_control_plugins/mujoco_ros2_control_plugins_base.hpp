@@ -72,6 +72,17 @@ public:
   }
 
   /**
+   * @brief Called from the physics thread immediately before each mj_step.
+   * @param model Pointer to the MuJoCo model
+   * @param data Pointer to the live physics MuJoCo data (mj_data_, NOT the control copy)
+   * @note Override to apply forces that must be recomputed at every physics step,
+   *       independent of the ros2_control update rate.  The default is a no-op.
+   */
+  virtual void pre_step(const mjModel* /*model*/, mjData* /*data*/)
+  {
+  }
+
+  /**
    * @brief Called from the GLFW UI thread on every key event.
    * @return true if the event was consumed (caller should not forward to the MuJoCo viewer).
    * @note Invoked on the UI thread, not the physics thread. Implementations must be

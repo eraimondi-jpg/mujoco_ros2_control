@@ -3141,6 +3141,8 @@ void MujocoSystemInterface::PhysicsLoop()
             mju_copy(mj_data_->ctrl, mj_data_control_->ctrl, static_cast<int>(mj_model_->nu));
             mju_copy(mj_data_->qfrc_applied, mj_data_control_->qfrc_applied, static_cast<int>(mj_model_->nu));
             mju_copy(mj_data_->xfrc_applied, mj_data_control_->xfrc_applied, 6 * static_cast<int>(mj_model_->nbody));
+            for (auto& plugin : plugin_instances_)
+              plugin->pre_step(mj_model_, mj_data_);
             // run single step, let next iteration deal with timing
             mj_step(mj_model_, mj_data_);
 
@@ -3194,6 +3196,8 @@ void MujocoSystemInterface::PhysicsLoop()
               mju_copy(mj_data_->ctrl, mj_data_control_->ctrl, static_cast<int>(mj_model_->nu));
               mju_copy(mj_data_->qfrc_applied, mj_data_control_->qfrc_applied, static_cast<int>(mj_model_->nu));
               mju_copy(mj_data_->xfrc_applied, mj_data_control_->xfrc_applied, 6 * static_cast<int>(mj_model_->nbody));
+              for (auto& plugin : plugin_instances_)
+                plugin->pre_step(mj_model_, mj_data_);
               // call mj_step
               mj_step(mj_model_, mj_data_);
 
@@ -3251,6 +3255,8 @@ void MujocoSystemInterface::PhysicsLoop()
             mju_copy(mj_data_->ctrl, mj_data_control_->ctrl, static_cast<int>(mj_model_->nu));
             mju_copy(mj_data_->qfrc_applied, mj_data_control_->qfrc_applied, static_cast<int>(mj_model_->nu));
             mju_copy(mj_data_->xfrc_applied, mj_data_control_->xfrc_applied, 6 * static_cast<int>(mj_model_->nbody));
+            for (auto& plugin : plugin_instances_)
+              plugin->pre_step(mj_model_, mj_data_);
             mj_step(mj_model_, mj_data_);
             publish_clock();
 
